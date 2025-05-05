@@ -49,7 +49,7 @@ No clutter. No guessing. Just results. 🧬✨
 
 ### 🔧 Requirements
 
-- Python 3.8+
+- Python 3.10
 - OpenCV
 - TensorFlow
 - NumPy
