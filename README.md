@@ -86,7 +86,7 @@ Control your mouse using a **single finger** — tracked in real time from your 
 
 ## 📈 Model Performance
 
-![Training Metrics](training_metrics.png)
+![Training Metrics](model_metrices/training_metrics.png)
 
 - Accuracy: ✅ Over 95%
 - Binary Classification: 1 finger vs others
