@@ -7,10 +7,10 @@ import time
 from tensorflow.keras.models import load_model
 
 IMAGE_SIZE = 128
+ROI_SIZE = 170
 MODEL_PATH = 'fingers_detection.keras'
 
 model = load_model(MODEL_PATH)
-
 
 def preprocess_frame(roi):
     gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
@@ -19,7 +19,6 @@ def preprocess_frame(roi):
     gray = np.reshape(gray, (1, IMAGE_SIZE, IMAGE_SIZE, 1))
     return gray
 
-# Initialize
 cap = cv2.VideoCapture(0)
 screen_w, screen_h = pyautogui.size()
 mp_hands = mp.solutions.hands
@@ -27,7 +26,10 @@ hands = mp_hands.Hands(max_num_hands=1, min_detection_confidence=0.7)
 mp_draw = mp.solutions.drawing_utils
 last_click_time = 0
 
-print("Virtual mouse started... Press 'q' to quit.")
+smooth_x, smooth_y = 0, 0
+alpha = 0.4  # Smoothing factor (0 < alpha < 1)
+
+print("Virtual mouse started...\n Press 'q' to quit.")
 
 while True:
     success, frame = cap.read()
@@ -50,11 +52,18 @@ while True:
             xmax = min(int(max(x_vals) * w) + 20, w)
             ymax = min(int(max(y_vals) * h) + 20, h)
 
+            # Calculate the center of the bounding box
             center_x = int((xmin + xmax) / 2 / w * screen_w)
             center_y = int((ymin + ymax) / 2 / h * screen_h)
-            pyautogui.moveTo(center_x, center_y, duration=0.01)
 
-            ROI_SIZE = 170
+            # Smooth the mouse movement using Exponential Moving Average (EMA)
+            smooth_x = int(alpha * center_x + (1 - alpha) * smooth_x)
+            smooth_y = int(alpha * center_y + (1 - alpha) * smooth_y)
+
+            # Move the mouse smoothly
+            pyautogui.moveTo(smooth_x, smooth_y)
+
+            # Hand Region of Interest (ROI) for gesture prediction
             center_x_pixel = int((xmin + xmax) / 2)
             center_y_pixel = int((ymin + ymax) / 2)
             half_roi = ROI_SIZE // 2
@@ -76,7 +85,7 @@ while True:
 
             if prediction[0][0] >= 0.5:
                 current_time = time.time()
-                if current_time - last_click_time > 1:
+                if current_time - last_click_time > 0.3:
                     pyautogui.click()
                     print("Click")
                     last_click_time = current_time
