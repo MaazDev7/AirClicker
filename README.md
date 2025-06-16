@@ -1,19 +1,8 @@
-# 🖐️ Finger Detection & Virtual Mouse Project
+# 👆 AirClicker
 
-> _"What if your fingers could talk to your computer?"_  
-> _What started as an experiment... turned into something magical._
-
-## ❤️ About This Project
-
-This isn't just another hand-gesture project.  
-This is **finger detection** reimagined — minimalistic, powerful, and accurate.  
-Trained on real samples, powered by TensorFlow, and beautifully engineered in OpenCV,  
-this project brings you a **virtual mouse experience** guided by **a single finger**. 🎯
-
-Where most models fail with noise or require heavy preprocessing,  
-ours rises above with **elegant grayscale simplicity**.  
-It's **fast**, **lightweight**, and **beautifully interpretable**.  
-No clutter. No guessing. Just results. 🧬✨
+This project explores finger detection for controlling a virtual mouse using just a single finger.
+Built with TensorFlow, OpenCV, and simple grayscale processing,
+it demonstrates how minimal input and lightweight modeling can deliver effective results in real-time interaction.
 
 ---
 
@@ -27,6 +16,14 @@ No clutter. No guessing. Just results. 🧬✨
 - 🔐 Works offline, no internet dependency
 
 ---
+
+## 🔍 Going Beyond MediaPipe
+
+While this virtual mouse could have been built entirely with MediaPipe, I chose to incorporate TensorFlow and model training to take it a step further.
+A custom binary classifier was implemented to distinguish between:
+
+- Click Gesture → One finger visible (Class 1)
+- No Click → Any other gesture or hand configuration (Class 0)
 
 ## 📂 Project Structure
 
