@@ -33,7 +33,7 @@ A custom binary classifier was implemented to distinguish between:
 📁 fingers
 	├── train/
 	└── test/
-📄 fingers_detection.keras        ← Final trained model
+📄 fingers_detection.keras       ← Final trained model
 📄 model_training.ipynb          ← Notebook to train model
 📄 testing.ipynb                 ← Testing model on static images
 📄 virtual_mouse.py              ← Real-time finger detection & control
